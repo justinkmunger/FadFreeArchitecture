@@ -17,12 +17,6 @@ import Foundation
 
 extension DataController {
     func getStations(completion: ((NetworkResult<AnyObject?>)->())?) {
-        for operation in operationQueue.operations {
-            if operation.isKindOfClass(NearbyStationNetworkOperation.self) {
-                return
-            }
-        }
-        
         let nearbyStationNetworkOperation = networkController.getNearbyStationNetworkOperation("41.980953", longitude: "-87.659572")
         nearbyStationNetworkOperation.queuePriority = .Normal
         

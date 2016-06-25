@@ -19,11 +19,17 @@ enum NetworkResult<T> {
     case Error(NSError)
 }
 
-class NetworkOperation: BaseOperation {
+protocol JSONResponseProvider {
+    var responseJSON: AnyObject? { get }
+}
+
+class NetworkOperation: BaseOperation, JSONResponseProvider {
     let task: NSURLSessionTask
     
     var myData = NSMutableData()
-        
+    
+    var responseJSON: AnyObject?
+    
     init(task: NSURLSessionTask) {
         self.task = task
         
@@ -85,7 +91,12 @@ class NetworkOperation: BaseOperation {
             return
         }
         
-        processData()
+        do {
+            self.responseJSON = try NSJSONSerialization.JSONObjectWithData(myData, options: .AllowFragments)
+        } catch let error as NSError {
+            myError = error
+            state = .Finished
+        }
         
         state = .Finished
     }

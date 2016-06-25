@@ -53,7 +53,7 @@ class NetworkController: NSObject {
         session = NSURLSession(configuration: configuration, delegate: self, delegateQueue: nil)
     }
     
-    func getNearbyStationNetworkOperation(latitude: String, longitude: String) -> NearbyStationNetworkOperation {
+    func getNearbyStationNetworkOperation(latitude: String, longitude: String) -> NetworkOperation {
         let components = NSURLComponents()
         
         components.scheme = rootURL.scheme
@@ -68,7 +68,7 @@ class NetworkController: NSObject {
         let urlRequest = NSMutableURLRequest(URL: endpointURL)
         let task = session.dataTaskWithRequest(urlRequest)
         
-        let operation = NearbyStationNetworkOperation(task: task)
+        let operation = NetworkOperation(task: task)
         taskToOperationMap[task] = operation
         
         return operation

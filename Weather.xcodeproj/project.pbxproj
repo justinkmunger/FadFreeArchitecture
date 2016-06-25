@@ -11,7 +11,6 @@
 		26BDAC481CFA4D95009391EC /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC311CFA4D95009391EC /* DataController.swift */; };
 		26BDAC491CFA4D95009391EC /* DataController+WeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC341CFA4D95009391EC /* DataController+WeatherAPI.swift */; };
 		26BDAC4A1CFA4D95009391EC /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC351CFA4D95009391EC /* NetworkController.swift */; };
-		26BDAC4B1CFA4D95009391EC /* NearbyStationNetworkOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC371CFA4D95009391EC /* NearbyStationNetworkOperation.swift */; };
 		26BDAC4C1CFA4D95009391EC /* NetworkOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC381CFA4D95009391EC /* NetworkOperation.swift */; };
 		26BDAC4D1CFA4D95009391EC /* Weather.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC3B1CFA4D95009391EC /* Weather.xcdatamodeld */; };
 		26BDAC4E1CFA4D95009391EC /* StationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC3F1CFA4D95009391EC /* StationResult.swift */; };
@@ -33,7 +32,6 @@
 		26BDAC311CFA4D95009391EC /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		26BDAC341CFA4D95009391EC /* DataController+WeatherAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataController+WeatherAPI.swift"; sourceTree = "<group>"; };
 		26BDAC351CFA4D95009391EC /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
-		26BDAC371CFA4D95009391EC /* NearbyStationNetworkOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyStationNetworkOperation.swift; sourceTree = "<group>"; };
 		26BDAC381CFA4D95009391EC /* NetworkOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkOperation.swift; sourceTree = "<group>"; };
 		26BDAC3C1CFA4D95009391EC /* Weather.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Weather.xcdatamodel; sourceTree = "<group>"; };
 		26BDAC3F1CFA4D95009391EC /* StationResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationResult.swift; sourceTree = "<group>"; };
@@ -95,7 +93,6 @@
 		26BDAC361CFA4D95009391EC /* Operations */ = {
 			isa = PBXGroup;
 			children = (
-				26BDAC371CFA4D95009391EC /* NearbyStationNetworkOperation.swift */,
 				26BDAC381CFA4D95009391EC /* NetworkOperation.swift */,
 			);
 			path = Operations;
@@ -232,7 +229,6 @@
 				26BDAC2F1CFA4D95009391EC /* Data Controller */,
 				26BDAC531CFA4DA0009391EC /* Other Files */,
 			);
-			name = Weather;
 			path = Weather;
 			sourceTree = "<group>";
 		};
@@ -313,7 +309,6 @@
 				26BDAC4A1CFA4D95009391EC /* NetworkController.swift in Sources */,
 				26BDAC471CFA4D95009391EC /* BaseOperation.swift in Sources */,
 				26BDAC501CFA4D95009391EC /* DataController+CoreData.swift in Sources */,
-				26BDAC4B1CFA4D95009391EC /* NearbyStationNetworkOperation.swift in Sources */,
 				26BDAC691CFA4DAD009391EC /* StationCell.swift in Sources */,
 				26BDAC491CFA4D95009391EC /* DataController+WeatherAPI.swift in Sources */,
 				26BDAC4D1CFA4D95009391EC /* Weather.xcdatamodeld in Sources */,
