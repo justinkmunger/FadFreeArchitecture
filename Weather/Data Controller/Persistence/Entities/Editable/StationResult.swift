@@ -41,8 +41,6 @@ class StationResult: NSManagedObject {
             }
         }
         
-        print("distance: \(distance)")
-        
         stationID = id
         name = jsonName ?? ""
         distance = jsonDistance
@@ -51,7 +49,6 @@ class StationResult: NSManagedObject {
     
     class func getStationID(stationJSON: [String: AnyObject]) -> Int? {
         guard let station = stationJSON["station"] as? [String: AnyObject], id = station["id"] as? Int else {
-            print("No station found")
             return nil
         }
         
