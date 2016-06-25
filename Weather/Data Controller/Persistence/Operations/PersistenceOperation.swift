@@ -42,7 +42,12 @@ class PersistenceOperation: BaseOperation {
             return
         }
 
-        self.responseJSON = responseJSONProvider.responseJSON
+        guard let responseJSON = responseJSONProvider.responseJSON else {
+            state = .Finished
+            return
+        }
+        
+        self.responseJSON = responseJSON
 
         state = .Executing
         
