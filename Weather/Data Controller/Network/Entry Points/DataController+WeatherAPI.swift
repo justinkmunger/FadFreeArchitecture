@@ -32,7 +32,7 @@ extension DataController {
             }
         }
 
-        let nearbyStationPersistenceOperation = NearbyStationPersistenceOperation(parentContext: managedObjectContext)
+        let nearbyStationPersistenceOperation = NearbyStationPersistenceOperation(parentContext: persistenceController.managedObjectContext)
         nearbyStationPersistenceOperation.completionBlock = { [weak nearbyStationPersistenceOperation] in
             guard let strongOperation = nearbyStationPersistenceOperation else {
                 return

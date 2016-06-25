@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.backgroundTask = UIBackgroundTaskInvalid
         }
         
-        dataController.save()
+        dataController.persistenceController.save()
         application.endBackgroundTask(self.backgroundTask)
         self.backgroundTask = UIBackgroundTaskInvalid
     }
@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
-        dataController.save()
+        dataController.persistenceController.save()
     }
 }
 

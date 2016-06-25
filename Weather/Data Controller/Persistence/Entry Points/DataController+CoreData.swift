@@ -25,7 +25,7 @@ extension DataController {
         let distanceSort = NSSortDescriptor(key: "distance", ascending: true)
         request.sortDescriptors = [distanceSort]
         
-        let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: persistenceController.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         
         return frc
     }

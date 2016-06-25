@@ -25,6 +25,7 @@
 		26BDAC671CFA4DAD009391EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26BDAC601CFA4DAD009391EC /* Main.storyboard */; };
 		26BDAC681CFA4DAD009391EC /* CurrentConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC631CFA4DAD009391EC /* CurrentConditionsViewController.swift */; };
 		26BDAC691CFA4DAD009391EC /* StationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC651CFA4DAD009391EC /* StationCell.swift */; };
+		26D8B5851D1F3C4700160A7F /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D8B5841D1F3C4700160A7F /* PersistenceController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 		26BDAC611CFA4DAD009391EC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		26BDAC631CFA4DAD009391EC /* CurrentConditionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentConditionsViewController.swift; sourceTree = "<group>"; };
 		26BDAC651CFA4DAD009391EC /* StationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationCell.swift; sourceTree = "<group>"; };
+		26D8B5841D1F3C4700160A7F /* PersistenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		26E0DB081CC2B4E700C344AC /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -105,6 +107,7 @@
 				26BDAC3D1CFA4D95009391EC /* Entities */,
 				26BDAC421CFA4D95009391EC /* Entry Points */,
 				26BDAC441CFA4D95009391EC /* Operations */,
+				26D8B5841D1F3C4700160A7F /* PersistenceController.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				26BDAC4C1CFA4D95009391EC /* NetworkOperation.swift in Sources */,
 				26BDAC481CFA4D95009391EC /* DataController.swift in Sources */,
 				26BDAC4E1CFA4D95009391EC /* StationResult.swift in Sources */,
+				26D8B5851D1F3C4700160A7F /* PersistenceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
