@@ -33,18 +33,27 @@ class StationResult: NSManagedObject {
         let jsonName = station["name"] as? String
         
         var jsonTemperature: Double?
+        var jsonDate: Double?
+        
         if let last = stationJSON["last"] as? [String: AnyObject], main = last["main"] as? [String: AnyObject] {
             jsonTemperature = main["temp"] as? Double
             
             if jsonTemperature != nil {
                 jsonTemperature = 1.8 * (jsonTemperature! - 273.0) + 32.0
             }
+            
+            jsonDate = last["dt"] as? Double
         }
         
         stationID = id
         name = jsonName ?? ""
         distance = jsonDistance
         temperature = jsonTemperature ?? Double.NaN
+        if let jsonDate = jsonDate {
+            date = NSDate(timeIntervalSince1970: jsonDate)
+        } else {
+            date = NSDate.distantPast()
+        }
     }
     
     class func getStationID(stationJSON: [String: AnyObject]) -> Int? {

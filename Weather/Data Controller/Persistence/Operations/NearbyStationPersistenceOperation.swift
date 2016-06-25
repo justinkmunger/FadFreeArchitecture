@@ -44,10 +44,8 @@ class NearbyStationPersistenceOperation: PersistenceOperation {
                     }
                     
                     if let existingStation = existingStation {
-                        print("Update")
                         existingStation.populateWithJSON(stationJSON)
                     } else {
-                        print("Insert")
                         guard let stationResult = NSEntityDescription.insertNewObjectForEntityForName("StationResult", inManagedObjectContext: childContext) as? StationResult else {
                             fatalError("Couldn't create new StationResult")
                         }

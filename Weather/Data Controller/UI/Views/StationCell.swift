@@ -18,12 +18,22 @@ class StationCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet weak var dateTimeLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        initializeCell()
+    }
+    
+    override func prepareForReuse() {
+        initializeCell()
+    }
+    
+    func initializeCell() {
         nameLabel.text = ""
         distanceLabel.text = ""
+        dateTimeLabel.text = ""
         temperatureLabel.text = ""
     }
     
@@ -36,6 +46,11 @@ class StationCell: UITableViewCell {
         }
         
         distanceLabel.text = String(format: "%.2f miles", stationResult.distance)
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yy hh:mm a"
+        
+        dateTimeLabel.text = dateFormatter.stringFromDate(stationResult.date)
         
         if stationResult.temperature.isNaN {
             temperatureLabel.text = "<No temp>"
