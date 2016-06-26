@@ -22,11 +22,55 @@ extension DataController {
         let stationNamePredicate = NSPredicate(format: "name.length > 0")
         request.predicate = stationNamePredicate
         
-        let distanceSort = NSSortDescriptor(key: "distance", ascending: true)
-        request.sortDescriptors = [distanceSort]
+        request.sortDescriptors = [distanceSortDescriptorAscending]
         
         let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: persistenceController.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         
         return frc
+    }
+    
+    var dateSortDescriptorAscending: NSSortDescriptor {
+        return NSSortDescriptor(key: "date", ascending: true)
+    }
+
+    var dateSortDescriptorDescending: NSSortDescriptor {
+        return NSSortDescriptor(key: "date", ascending: false)
+    }
+    
+    var distanceSortDescriptorAscending: NSSortDescriptor {
+        return NSSortDescriptor(key: "distance", ascending: true)
+    }
+
+    var distanceSortDescriptorDescending: NSSortDescriptor {
+        return NSSortDescriptor(key: "distance", ascending: false)
+    }
+
+    var nameSortDescriptorAscending: NSSortDescriptor {
+        return NSSortDescriptor(key: "name", ascending: true)
+    }
+
+    var nameSortDescriptorDescending: NSSortDescriptor {
+        return NSSortDescriptor(key: "name", ascending: false)
+    }
+
+    
+    var allTimesPredicate: NSPredicate {
+        return NSPredicate(format: "name.length > 0")
+    }
+    
+    var lastThirtyMinutesTimePredicate: NSPredicate {
+        return NSPredicate(format: "name.length > 0 AND date >= %@", NSDate().dateByAddingTimeInterval(-(60*30)))
+    }
+    
+    var lastHourTimePredicate: NSPredicate {
+        return NSPredicate(format: "name.length > 0 AND date >= %@", NSDate().dateByAddingTimeInterval(-(60*60)))
+    }
+    
+    var lastTwoHoursTimePredicate: NSPredicate {
+        return NSPredicate(format: "name.length > 0 AND date >= %@", NSDate().dateByAddingTimeInterval(-(60*120)))
+    }
+
+    var lastFourHoursTimePredicate: NSPredicate {
+        return NSPredicate(format: "name.length > 0 AND date >= %@", NSDate().dateByAddingTimeInterval(-(60*240)))
     }
 }

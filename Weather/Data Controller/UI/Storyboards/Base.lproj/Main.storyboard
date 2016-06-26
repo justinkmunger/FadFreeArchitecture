@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Current Conditions-->
@@ -83,7 +84,20 @@
                             <outlet property="delegate" destination="xgT-YC-UaH" id="HAW-ph-EIv"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Current Conditions" id="UXU-Qq-qPD"/>
+                    <navigationItem key="navigationItem" title="Current Conditions" id="UXU-Qq-qPD">
+                        <rightBarButtonItems>
+                            <barButtonItem title="Sort" id="DHs-h7-rB9">
+                                <connections>
+                                    <action selector="sortButtonPressed:" destination="xgT-YC-UaH" id="Hsw-Gz-WBL"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Filter" id="sj8-mT-2Wy">
+                                <connections>
+                                    <action selector="filterButtonPressed:" destination="xgT-YC-UaH" id="BhQ-89-muU"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6ZT-Ne-RBf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

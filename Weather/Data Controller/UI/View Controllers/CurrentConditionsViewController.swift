@@ -20,6 +20,10 @@ class CurrentConditionsViewController: UITableViewController {
     var dataController: DataController!
     var stationResultsFetchedResultsController: NSFetchedResultsController?
 
+    var dateSortDescriptorAscending = true
+    var nameSortDescriptorAscending = true
+    var distanceSortDescriptorAscending = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -74,6 +78,162 @@ class CurrentConditionsViewController: UITableViewController {
             }
         }
     }
+
+    @IBAction func filterButtonPressed(sender: UIBarButtonItem) {
+        guard let stationResultsFetchedResultsController = self.stationResultsFetchedResultsController else {
+            return
+        }
+
+        let actionSheetController = UIAlertController(title: "Filter", message: "Choose the time range to filter on", preferredStyle: .ActionSheet)
+        
+        let lastThirtyMinutesPredicateAction = UIAlertAction(title: "Last thirty minutes", style: .Default) { action in
+            stationResultsFetchedResultsController.fetchRequest.predicate = self.dataController.lastThirtyMinutesTimePredicate
+            
+            do {
+                try stationResultsFetchedResultsController.performFetch()
+                self.tableView.reloadData()
+            } catch {
+                
+            }
+        }
+        
+        let lastHourPredicateAction = UIAlertAction(title: "Last hour", style: .Default) { action in
+            stationResultsFetchedResultsController.fetchRequest.predicate = self.dataController.lastHourTimePredicate
+            
+            do {
+                try stationResultsFetchedResultsController.performFetch()
+                self.tableView.reloadData()
+            } catch {
+                
+            }
+            
+        }
+        
+        let lastTwoHoursPredicateAction = UIAlertAction(title: "Last two hours", style: .Default) { action in
+            stationResultsFetchedResultsController.fetchRequest.predicate = self.dataController.lastTwoHoursTimePredicate
+            
+            do {
+                try stationResultsFetchedResultsController.performFetch()
+                self.tableView.reloadData()
+            } catch {
+                
+            }
+            
+        }
+
+        let lastFourHoursPredicateAction = UIAlertAction(title: "Last four hours", style: .Default) { action in
+            stationResultsFetchedResultsController.fetchRequest.predicate = self.dataController.lastFourHoursTimePredicate
+            
+            do {
+                try stationResultsFetchedResultsController.performFetch()
+                self.tableView.reloadData()
+            } catch {
+                
+            }
+            
+        }
+
+        let allTimesPredicateAction = UIAlertAction(title: "All Times", style: .Default) { action in
+            stationResultsFetchedResultsController.fetchRequest.predicate = self.dataController.allTimesPredicate
+            
+            do {
+                try stationResultsFetchedResultsController.performFetch()
+                self.tableView.reloadData()
+            } catch {
+                
+            }
+            
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        
+        actionSheetController.addAction(lastThirtyMinutesPredicateAction)
+        actionSheetController.addAction(lastHourPredicateAction)
+        actionSheetController.addAction(lastTwoHoursPredicateAction)
+        actionSheetController.addAction(lastFourHoursPredicateAction)
+        actionSheetController.addAction(allTimesPredicateAction)
+        actionSheetController.addAction(cancelAction)
+        
+        presentViewController(actionSheetController, animated: true, completion: nil)
+    }
+    
+    @IBAction func sortButtonPressed(sender: UIBarButtonItem) {
+        let actionSheetController = UIAlertController(title: "Sort", message: "Choose with property to sort by", preferredStyle: .ActionSheet)
+        
+        let dateSortDirectionString = dateSortDescriptorAscending ? "Descending" : "Ascending"
+        let dateAction = UIAlertAction(title: "Date \(dateSortDirectionString)", style: .Default) { action in
+            
+            var dateSortDescriptor: NSSortDescriptor
+            
+            if self.dateSortDescriptorAscending {
+                dateSortDescriptor = self.dataController.dateSortDescriptorDescending
+            } else {
+                dateSortDescriptor = self.dataController.dateSortDescriptorAscending
+            }
+            self.stationResultsFetchedResultsController?.fetchRequest.sortDescriptors = [dateSortDescriptor]
+            
+            do {
+                try self.stationResultsFetchedResultsController?.performFetch()
+                self.dateSortDescriptorAscending = !self.dateSortDescriptorAscending
+                self.tableView.reloadData()
+            } catch {
+                
+            }
+        }
+        
+        let nameSortDirectionString = nameSortDescriptorAscending ? "Descending" : "Ascending"
+        let nameAction = UIAlertAction(title: "Name \(nameSortDirectionString)", style: .Default) { action in
+            
+            var nameSortDescriptor: NSSortDescriptor
+            
+            if self.nameSortDescriptorAscending {
+                nameSortDescriptor = self.dataController.nameSortDescriptorDescending
+            } else {
+                nameSortDescriptor = self.dataController.nameSortDescriptorAscending
+            }
+            
+            self.stationResultsFetchedResultsController?.fetchRequest.sortDescriptors = [nameSortDescriptor]
+            
+            do {
+                try self.stationResultsFetchedResultsController?.performFetch()
+                self.nameSortDescriptorAscending = !self.nameSortDescriptorAscending
+                self.tableView.reloadData()
+            } catch {
+                
+            }
+        }
+        
+        let distanceSortDirectionString = distanceSortDescriptorAscending ? "Descending" : "Ascending"
+        let distanceAction = UIAlertAction(title: "Distance \(distanceSortDirectionString)", style: .Default) { action in
+            var distanceSortDescriptor: NSSortDescriptor
+            
+            if self.distanceSortDescriptorAscending {
+                distanceSortDescriptor = self.dataController.distanceSortDescriptorDescending
+            } else {
+                distanceSortDescriptor = self.dataController.distanceSortDescriptorAscending
+            }
+            
+            self.stationResultsFetchedResultsController?.fetchRequest.sortDescriptors = [distanceSortDescriptor]
+            
+            do {
+                try self.stationResultsFetchedResultsController?.performFetch()
+                self.distanceSortDescriptorAscending = !self.distanceSortDescriptorAscending
+                self.tableView.reloadData()
+            } catch {
+                
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        
+        actionSheetController.addAction(dateAction)
+        actionSheetController.addAction(nameAction)
+        actionSheetController.addAction(distanceAction)
+        actionSheetController.addAction(cancelAction)
+        
+        presentViewController(actionSheetController, animated: true, completion: nil)
+    }
+    
 }
 
 extension CurrentConditionsViewController {
