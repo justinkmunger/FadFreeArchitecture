@@ -22,49 +22,49 @@ class PersistenceController {
     private let writerContext: NSManagedObjectContext
     
     init() {
-        guard let modelURL = NSBundle.mainBundle().URLForResource("Weather", withExtension: "momd") else {
+        guard let modelURL = Bundle.main().urlForResource("Weather", withExtension: "momd") else {
             fatalError("Unable to find model file")
         }
         
-        guard let model = NSManagedObjectModel(contentsOfURL: modelURL) else {
+        guard let model = NSManagedObjectModel(contentsOf: modelURL) else {
             fatalError("Failed to initialize data model")
         }
         
         persistenceStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
         
-        writerContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        writerContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         writerContext.persistentStoreCoordinator = persistenceStoreCoordinator
         
-        managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-        managedObjectContext.parentContext = writerContext
+        managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        managedObjectContext.parent = writerContext
     }
     
-    func initCoreDataStack(completion: () -> ()) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-            let fileManager = NSFileManager.defaultManager()
-            let docURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last
+    func initCoreDataStack(_ completion: () -> ()) {
+        DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes.qosBackground).async {
+            let fileManager = FileManager.default()
+            let docURL = fileManager.urlsForDirectory(.documentDirectory, inDomains: .userDomainMask).last
             
-            guard let storeURL = docURL?.URLByAppendingPathComponent("data.sqlite") else {
+            guard let storeURL = try! docURL?.appendingPathComponent("data.sqlite") else {
                 fatalError("Unable to resolve persistent store URL")
             }
             
             let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
             
             do {
-                try self.persistenceStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options)
+                try self.persistenceStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: options)
             } catch {
                 fatalError("Unable to add persistent store")
             }
             
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 completion()
             }
         }
     }
     
     func save() {
-        if !NSThread.isMainThread() {
-            dispatch_sync(dispatch_get_main_queue()) {
+        if !Thread.isMainThread() {
+            DispatchQueue.main.sync {
                 self.save()
             }
             return
@@ -78,13 +78,13 @@ class PersistenceController {
             }
         }
         
-        writerContext.performBlock() {
+        writerContext.perform() {
             do {
                 if self.writerContext.hasChanges {
                     try self.writerContext.save()
                 }
             } catch {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     // Handle error here
                 }
             }

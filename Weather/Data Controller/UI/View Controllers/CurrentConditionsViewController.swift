@@ -18,7 +18,7 @@ import UIKit
 class CurrentConditionsViewController: UITableViewController {
 
     var dataController: DataController!
-    var stationResultsFetchedResultsController: NSFetchedResultsController?
+    var stationResultsFetchedResultsController: NSFetchedResultsController<StationResult>?
 
     var dateSortDescriptorAscending = true
     var nameSortDescriptorAscending = true
@@ -53,7 +53,7 @@ class CurrentConditionsViewController: UITableViewController {
         }
         
         refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(refreshStations), forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl?.addTarget(self, action: #selector(refreshStations), for: UIControlEvents.valueChanged)
     }
     
     func refreshStations() {
@@ -66,27 +66,27 @@ class CurrentConditionsViewController: UITableViewController {
             strongSelf.refreshControl?.endRefreshing()
             
             switch result {
-                case .Success:
+                case .success:
                     break
-                case .Error:
-                    let alertController = UIAlertController(title: "Error", message: "Error", preferredStyle: .Alert)
+                case .error:
+                    let alertController = UIAlertController(title: "Error", message: "Error", preferredStyle: .alert)
                     
-                    let alertAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                    let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                     alertController.addAction(alertAction)
                     
-                    strongSelf.presentViewController(alertController, animated: true, completion: nil)
+                    strongSelf.present(alertController, animated: true, completion: nil)
             }
         }
     }
 
-    @IBAction func filterButtonPressed(sender: UIBarButtonItem) {
+    @IBAction func filterButtonPressed(_ sender: UIBarButtonItem) {
         guard let stationResultsFetchedResultsController = self.stationResultsFetchedResultsController else {
             return
         }
 
-        let actionSheetController = UIAlertController(title: "Filter", message: "Choose the time range to filter on", preferredStyle: .ActionSheet)
+        let actionSheetController = UIAlertController(title: "Filter", message: "Choose the time range to filter on", preferredStyle: .actionSheet)
         
-        let lastThirtyMinutesPredicateAction = UIAlertAction(title: "Last thirty minutes", style: .Default) { action in
+        let lastThirtyMinutesPredicateAction = UIAlertAction(title: "Last thirty minutes", style: .default) { action in
             stationResultsFetchedResultsController.fetchRequest.predicate = self.dataController.lastThirtyMinutesTimePredicate
             
             do {
@@ -97,7 +97,7 @@ class CurrentConditionsViewController: UITableViewController {
             }
         }
         
-        let lastHourPredicateAction = UIAlertAction(title: "Last hour", style: .Default) { action in
+        let lastHourPredicateAction = UIAlertAction(title: "Last hour", style: .default) { action in
             stationResultsFetchedResultsController.fetchRequest.predicate = self.dataController.lastHourTimePredicate
             
             do {
@@ -109,7 +109,7 @@ class CurrentConditionsViewController: UITableViewController {
             
         }
         
-        let lastTwoHoursPredicateAction = UIAlertAction(title: "Last two hours", style: .Default) { action in
+        let lastTwoHoursPredicateAction = UIAlertAction(title: "Last two hours", style: .default) { action in
             stationResultsFetchedResultsController.fetchRequest.predicate = self.dataController.lastTwoHoursTimePredicate
             
             do {
@@ -121,7 +121,7 @@ class CurrentConditionsViewController: UITableViewController {
             
         }
 
-        let lastFourHoursPredicateAction = UIAlertAction(title: "Last four hours", style: .Default) { action in
+        let lastFourHoursPredicateAction = UIAlertAction(title: "Last four hours", style: .default) { action in
             stationResultsFetchedResultsController.fetchRequest.predicate = self.dataController.lastFourHoursTimePredicate
             
             do {
@@ -133,7 +133,7 @@ class CurrentConditionsViewController: UITableViewController {
             
         }
 
-        let allTimesPredicateAction = UIAlertAction(title: "All Times", style: .Default) { action in
+        let allTimesPredicateAction = UIAlertAction(title: "All Times", style: .default) { action in
             stationResultsFetchedResultsController.fetchRequest.predicate = self.dataController.allTimesPredicate
             
             do {
@@ -145,7 +145,7 @@ class CurrentConditionsViewController: UITableViewController {
             
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         actionSheetController.addAction(lastThirtyMinutesPredicateAction)
         actionSheetController.addAction(lastHourPredicateAction)
@@ -154,16 +154,16 @@ class CurrentConditionsViewController: UITableViewController {
         actionSheetController.addAction(allTimesPredicateAction)
         actionSheetController.addAction(cancelAction)
         
-        presentViewController(actionSheetController, animated: true, completion: nil)
+        present(actionSheetController, animated: true, completion: nil)
     }
     
-    @IBAction func sortButtonPressed(sender: UIBarButtonItem) {
-        let actionSheetController = UIAlertController(title: "Sort", message: "Choose with property to sort by", preferredStyle: .ActionSheet)
+    @IBAction func sortButtonPressed(_ sender: UIBarButtonItem) {
+        let actionSheetController = UIAlertController(title: "Sort", message: "Choose with property to sort by", preferredStyle: .actionSheet)
         
         let dateSortDirectionString = dateSortDescriptorAscending ? "Descending" : "Ascending"
-        let dateAction = UIAlertAction(title: "Date \(dateSortDirectionString)", style: .Default) { action in
+        let dateAction = UIAlertAction(title: "Date \(dateSortDirectionString)", style: .default) { action in
             
-            var dateSortDescriptor: NSSortDescriptor
+            var dateSortDescriptor: SortDescriptor
             
             if self.dateSortDescriptorAscending {
                 dateSortDescriptor = self.dataController.dateSortDescriptorDescending
@@ -182,9 +182,9 @@ class CurrentConditionsViewController: UITableViewController {
         }
         
         let nameSortDirectionString = nameSortDescriptorAscending ? "Descending" : "Ascending"
-        let nameAction = UIAlertAction(title: "Name \(nameSortDirectionString)", style: .Default) { action in
+        let nameAction = UIAlertAction(title: "Name \(nameSortDirectionString)", style: .default) { action in
             
-            var nameSortDescriptor: NSSortDescriptor
+            var nameSortDescriptor: SortDescriptor
             
             if self.nameSortDescriptorAscending {
                 nameSortDescriptor = self.dataController.nameSortDescriptorDescending
@@ -204,8 +204,8 @@ class CurrentConditionsViewController: UITableViewController {
         }
         
         let distanceSortDirectionString = distanceSortDescriptorAscending ? "Descending" : "Ascending"
-        let distanceAction = UIAlertAction(title: "Distance \(distanceSortDirectionString)", style: .Default) { action in
-            var distanceSortDescriptor: NSSortDescriptor
+        let distanceAction = UIAlertAction(title: "Distance \(distanceSortDirectionString)", style: .default) { action in
+            var distanceSortDescriptor: SortDescriptor
             
             if self.distanceSortDescriptorAscending {
                 distanceSortDescriptor = self.dataController.distanceSortDescriptorDescending
@@ -224,24 +224,24 @@ class CurrentConditionsViewController: UITableViewController {
             }
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         actionSheetController.addAction(dateAction)
         actionSheetController.addAction(nameAction)
         actionSheetController.addAction(distanceAction)
         actionSheetController.addAction(cancelAction)
         
-        presentViewController(actionSheetController, animated: true, completion: nil)
+        present(actionSheetController, animated: true, completion: nil)
     }
     
 }
 
 extension CurrentConditionsViewController {
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return stationResultsFetchedResultsController?.sections?.count ?? 1
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard let fetchedResultController = self.stationResultsFetchedResultsController, sections = fetchedResultController.sections else {
             return nil
         }
@@ -249,7 +249,7 @@ extension CurrentConditionsViewController {
         return sections[section].name
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         guard let fetchedResultController = self.stationResultsFetchedResultsController,
             sections = fetchedResultController.sections else {
@@ -259,9 +259,9 @@ extension CurrentConditionsViewController {
         return sections[section].numberOfObjects
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             
-        guard let cell = tableView.dequeueReusableCellWithIdentifier("StationCell", forIndexPath: indexPath) as? StationCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "StationCell", for: indexPath) as? StationCell else {
             fatalError("StationCell not found")
         }
         
@@ -270,7 +270,7 @@ extension CurrentConditionsViewController {
             return UITableViewCell()
         }
         
-        guard let stationResult = fetchedResultController.objectAtIndexPath(indexPath) as? StationResult else {
+        guard let stationResult = fetchedResultController.object(at: indexPath) as? StationResult else {
             print("did not return station result object")
             return UITableViewCell()
         }
@@ -282,23 +282,23 @@ extension CurrentConditionsViewController {
 }
 
 extension CurrentConditionsViewController: NSFetchedResultsControllerDelegate {
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: AnyObject, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
-        case .Insert:
-            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Automatic)
-        case .Delete:
-            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
-        case .Update:
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+        case .update:
             guard let indexPath = indexPath else {
                 print("indexPath not valid")
                 return
             }
             
-            guard let cell = tableView.cellForRowAtIndexPath(indexPath) as? StationCell else {
+            guard let cell = tableView.cellForRow(at: indexPath) as? StationCell else {
                 return
             }
             
@@ -307,30 +307,30 @@ extension CurrentConditionsViewController: NSFetchedResultsControllerDelegate {
                 return
             }
 
-            guard let stationResult = fetchedResultController.objectAtIndexPath(indexPath) as? StationResult else {
+            guard let stationResult = fetchedResultController.object(at: indexPath) as? StationResult else {
                 print("did not return station result object")
                 return
             }
             
             cell.configureCell(stationResult)
-        case .Move:
-            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
-            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Automatic)
+        case .move:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
         }
     }
     
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
-        let indexSet = NSIndexSet(index: sectionIndex)
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        let indexSet = IndexSet(integer: sectionIndex)
         
         switch type {
-        case .Insert:
-            tableView.insertSections(indexSet, withRowAnimation: .Automatic)
-        case .Delete:
-            tableView.deleteSections(indexSet, withRowAnimation: .Automatic)
+        case .insert:
+            tableView.insertSections(indexSet, with: .automatic)
+        case .delete:
+            tableView.deleteSections(indexSet, with: .automatic)
         default:
             break
         }

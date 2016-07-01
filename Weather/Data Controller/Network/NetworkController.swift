@@ -15,13 +15,13 @@
 import Foundation
 
 class NetworkController: NSObject {
-    let rootURL: NSURL
-    var session: NSURLSession!
+    let rootURL: URL
+    var session: Foundation.URLSession!
     
-    private var taskToOperationMap: [NSURLSessionTask: NetworkOperation]
+    private var taskToOperationMap: [URLSessionTask: NetworkOperation]
 
     lazy var apiKey: String = {
-        guard let apiKeyPath = NSBundle.mainBundle().pathForResource("APIKey", ofType: "plist") else {
+        guard let apiKeyPath = Bundle.main().pathForResource("APIKey", ofType: "plist") else {
             fatalError("Couldn't find APIKey.plist")
         }
 
@@ -37,36 +37,36 @@ class NetworkController: NSObject {
     }()
     
     override init() {
-        guard let rootURL = NSURL(string: "http://api.openweathermap.org") else {
+        guard let rootURL = URL(string: "http://api.openweathermap.org") else {
             fatalError("failed to initialize endpointURL")
         }
         
         self.rootURL = rootURL
 
-        taskToOperationMap = [NSURLSessionTask: NetworkOperation]()
+        taskToOperationMap = [URLSessionTask: NetworkOperation]()
 
         super.init()
         
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let configuration = URLSessionConfiguration.default()
         configuration.timeoutIntervalForRequest = 30.0
         
-        session = NSURLSession(configuration: configuration, delegate: self, delegateQueue: nil)
+        session = Foundation.URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
     }
     
-    func getNearbyStationNetworkOperation(latitude: String, longitude: String) -> NetworkOperation {
-        let components = NSURLComponents()
+    func getNearbyStationNetworkOperation(_ latitude: String, longitude: String) -> NetworkOperation {
+        var components = URLComponents()
         
         components.scheme = rootURL.scheme
         components.host = rootURL.host
         components.path = "/data/2.5/station/find"
         components.query = "lat=\(latitude)&lon=\(longitude)&cnt=30&units=imperial&appid=\(apiKey)"
         
-        guard let endpointURL = components.URL else {
+        guard let endpointURL = components.url else {
             fatalError("couldn't create endpointURL")
         }
         
-        let urlRequest = NSMutableURLRequest(URL: endpointURL)
-        let task = session.dataTaskWithRequest(urlRequest)
+        let urlRequest = URLRequest(url: endpointURL)
+        let task = session.dataTask(with: urlRequest)
         
         let operation = NetworkOperation(task: task)
         taskToOperationMap[task] = operation
@@ -75,10 +75,10 @@ class NetworkController: NSObject {
     }
 }
 
-extension NetworkController: NSURLSessionDataDelegate {
-    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveResponse response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
+extension NetworkController: URLSessionDataDelegate {
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: (URLSession.ResponseDisposition) -> Void) {
         if let operation = taskToOperationMap[dataTask] {
-            if operation.cancelled {
+            if operation.isCancelled {
                 taskToOperationMap[dataTask] = nil
             } else {
                 operation.didReceiveResponse(response, completionHandler: completionHandler)
@@ -86,9 +86,9 @@ extension NetworkController: NSURLSessionDataDelegate {
         }
     }
 
-    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         if let operation = taskToOperationMap[dataTask] {
-            if operation.cancelled {
+            if operation.isCancelled {
                 taskToOperationMap[dataTask] = nil
             } else {
                 operation.didReceiveData(data)
@@ -97,7 +97,7 @@ extension NetworkController: NSURLSessionDataDelegate {
         }
     }
     
-    func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: NSError?) {
         if let operation = taskToOperationMap[task] {
             operation.didCompleteWithError(error)
             taskToOperationMap[task] = nil

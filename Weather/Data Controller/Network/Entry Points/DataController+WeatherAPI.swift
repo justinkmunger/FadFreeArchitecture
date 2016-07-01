@@ -16,9 +16,9 @@ import CoreData
 import Foundation
 
 extension DataController {
-    func getStations(completion: ((NetworkResult<AnyObject?>)->())?) {
+    func getStations(_ completion: ((NetworkResult<AnyObject?>)->())?) {
         let nearbyStationNetworkOperation = networkController.getNearbyStationNetworkOperation("41.980953", longitude: "-87.659572")
-        nearbyStationNetworkOperation.queuePriority = .Normal
+        nearbyStationNetworkOperation.queuePriority = .normal
         
         nearbyStationNetworkOperation.completionBlock = { [weak nearbyStationNetworkOperation] in
             guard let strongOperation = nearbyStationNetworkOperation else {
@@ -26,8 +26,8 @@ extension DataController {
             }
             
             if let completion = completion, error = strongOperation.myError as? NSError {
-                NSOperationQueue.mainQueue().addOperationWithBlock {
-                    completion(.Error(error))
+                OperationQueue.main().addOperation {
+                    completion(.error(error))
                 }
             }
         }
@@ -39,11 +39,11 @@ extension DataController {
             }
             
             if let completion = completion {
-                NSOperationQueue.mainQueue().addOperationWithBlock {
+                OperationQueue.main().addOperation {
                     if let error = strongOperation.myError as? NSError {
-                        completion(.Error(error))
+                        completion(.error(error))
                     } else {
-                        completion(.Success(nil))
+                        completion(.success(nil))
                     }
                 }
             }

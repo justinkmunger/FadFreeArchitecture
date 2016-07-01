@@ -21,5 +21,5 @@ extension StationResult {
     @NSManaged var distance: Double
     @NSManaged var name: String
     @NSManaged var temperature: Double
-    @NSManaged var date: NSDate
+    @NSManaged var date: Date
 }

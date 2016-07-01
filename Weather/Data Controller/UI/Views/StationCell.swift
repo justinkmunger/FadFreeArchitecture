@@ -37,7 +37,7 @@ class StationCell: UITableViewCell {
         temperatureLabel.text = ""
     }
     
-    func configureCell(stationResult: StationResult) {
+    func configureCell(_ stationResult: StationResult) {
         
         if stationResult.name.isEmpty {
             nameLabel.text = "<No station name>"
@@ -47,10 +47,10 @@ class StationCell: UITableViewCell {
         
         distanceLabel.text = String(format: "%.2f miles", stationResult.distance)
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yy hh:mm a"
         
-        dateTimeLabel.text = dateFormatter.stringFromDate(stationResult.date)
+        dateTimeLabel.text = dateFormatter.string(from: stationResult.date as Date)
         
         if stationResult.temperature.isNaN {
             temperatureLabel.text = "<No temp>"

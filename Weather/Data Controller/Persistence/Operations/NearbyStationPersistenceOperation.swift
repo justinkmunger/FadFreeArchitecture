@@ -16,27 +16,26 @@ import CoreData
 import Foundation
 
 class NearbyStationPersistenceOperation: PersistenceOperation {
-    override func persistData(childContext: NSManagedObjectContext) {
+    override func persistData(_ childContext: NSManagedObjectContext) {
         
         guard let stationsJSON = responseJSON as? [[String: AnyObject]] else {
             return
         }
         
-        childContext.performBlockAndWait {
+        childContext.performAndWait {
             for stationJSON in stationsJSON {
                 if let stationID = StationResult.getStationID(stationJSON) {
                     
                     var existingStation: StationResult?
                     
-                    let fetchRequest = NSFetchRequest(entityName: "StationResult")
+                    let fetchRequest = NSFetchRequest<StationResult>(entityName: "StationResult")
                     
-                    let idPredicate = NSPredicate(format: "stationID = %d", stationID)
+                    let idPredicate = Predicate(format: "stationID = %d", stationID)
                     fetchRequest.predicate = idPredicate
                     
                     do {
-                        if let stationObjects = try childContext.executeFetchRequest(fetchRequest) as? [StationResult] {
-                            existingStation = stationObjects.first
-                        }
+                        let stationObjects = try childContext.fetch(fetchRequest)
+                        existingStation = stationObjects.first
                     } catch {
                         self.myError = error
                         self.state = .Finished
@@ -46,7 +45,7 @@ class NearbyStationPersistenceOperation: PersistenceOperation {
                     if let existingStation = existingStation {
                         existingStation.populateWithJSON(stationJSON)
                     } else {
-                        guard let stationResult = NSEntityDescription.insertNewObjectForEntityForName("StationResult", inManagedObjectContext: childContext) as? StationResult else {
+                        guard let stationResult = NSEntityDescription.insertNewObject(forEntityName: "StationResult", into: childContext) as? StationResult else {
                             fatalError("Couldn't create new StationResult")
                         }
                         

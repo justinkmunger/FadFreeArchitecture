@@ -17,7 +17,7 @@ import CoreData
 
 
 class StationResult: NSManagedObject {
-    func populateWithJSON(stationJSON: [String: AnyObject]) {
+    func populateWithJSON(_ stationJSON: [String: AnyObject]) {
         guard var jsonDistance = stationJSON["distance"] as? Double else {
             print("No distance found")
             return
@@ -48,15 +48,15 @@ class StationResult: NSManagedObject {
         stationID = id
         name = jsonName ?? ""
         distance = jsonDistance
-        temperature = jsonTemperature ?? Double.NaN
+        temperature = jsonTemperature ?? Double.nan
         if let jsonDate = jsonDate {
-            date = NSDate(timeIntervalSince1970: jsonDate)
+            date = Date(timeIntervalSince1970: jsonDate)
         } else {
-            date = NSDate.distantPast()
+            date = Date.distantPast
         }
     }
     
-    class func getStationID(stationJSON: [String: AnyObject]) -> Int? {
+    class func getStationID(_ stationJSON: [String: AnyObject]) -> Int? {
         guard let station = stationJSON["station"] as? [String: AnyObject], id = station["id"] as? Int else {
             return nil
         }

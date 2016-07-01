@@ -15,8 +15,8 @@
 import Foundation
 
 enum NetworkResult<T> {
-    case Success(T)
-    case Error(NSError)
+    case success(T)
+    case error(NSError)
 }
 
 protocol JSONResponseProvider {
@@ -24,20 +24,20 @@ protocol JSONResponseProvider {
 }
 
 class NetworkOperation: BaseOperation, JSONResponseProvider {
-    let task: NSURLSessionTask
+    let task: URLSessionTask
     
     var myData = NSMutableData()
     
     var responseJSON: AnyObject?
     
-    init(task: NSURLSessionTask) {
+    init(task: URLSessionTask) {
         self.task = task
         
         super.init()
     }
     
     override func start() {
-        if cancelled {
+        if isCancelled {
             state = .Finished
             return
         }
@@ -49,37 +49,37 @@ class NetworkOperation: BaseOperation, JSONResponseProvider {
         
     func processData() {}
     
-    func didReceiveResponse(response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
-        if cancelled {
+    func didReceiveResponse(_ response: URLResponse, completionHandler: (URLSession.ResponseDisposition) -> Void) {
+        if isCancelled {
             state = .Finished
             task.cancel()
             return
         }
         
-        guard let httpResponse = response as? NSHTTPURLResponse else {
+        guard let httpResponse = response as? HTTPURLResponse else {
             fatalError("Unexpected response")
         }
         
         if httpResponse.statusCode != 200 {
-            completionHandler(.Cancel)
+            completionHandler(.cancel)
             return
         }
         
-        completionHandler(.Allow)
+        completionHandler(.allow)
     }
     
-    func didReceiveData(data: NSData) {
-        if cancelled {
+    func didReceiveData(_ data: Data) {
+        if isCancelled {
             state = .Finished
             task.cancel()
             return
         }
         
-        myData.appendData(data)
+        myData.append(data)
     }
     
-    func didCompleteWithError(error: NSError?) {
-        if cancelled {
+    func didCompleteWithError(_ error: NSError?) {
+        if isCancelled {
             state = .Finished
             task.cancel()
             return
@@ -92,7 +92,7 @@ class NetworkOperation: BaseOperation, JSONResponseProvider {
         }
         
         do {
-            self.responseJSON = try NSJSONSerialization.JSONObjectWithData(myData, options: .AllowFragments)
+            self.responseJSON = try JSONSerialization.jsonObject(with: myData as Data, options: .allowFragments)
         } catch let error as NSError {
             myError = error
             state = .Finished

@@ -262,12 +262,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Justin Munger";
 				TargetAttributes = {
 					26E0DB071CC2B4E700C344AC = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = QKJ3ZEW54Z;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -444,6 +445,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.justintomobile.weather;
 				PRODUCT_NAME = Weather;
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -458,6 +460,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.justintomobile.weather;
 				PRODUCT_NAME = Weather;
 				PROVISIONING_PROFILE = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

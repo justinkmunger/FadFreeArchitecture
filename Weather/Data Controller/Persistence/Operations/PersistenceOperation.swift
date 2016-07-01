@@ -16,8 +16,8 @@ import CoreData
 import Foundation
 
 enum PersistenceResult {
-    case Success
-    case Error(NSError)
+    case success
+    case error(NSError)
 }
 
 class PersistenceOperation: BaseOperation {
@@ -32,7 +32,7 @@ class PersistenceOperation: BaseOperation {
     }
     
     override func start() {
-        if cancelled {
+        if isCancelled {
             state = .Finished
             return
         }
@@ -51,13 +51,13 @@ class PersistenceOperation: BaseOperation {
 
         state = .Executing
         
-        let childContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        childContext.parentContext = parentContext
+        let childContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        childContext.parent = parentContext
 
         persistData(childContext)
         
         state = .Finished
     }
 
-    func persistData(childContext: NSManagedObjectContext) {}
+    func persistData(_ childContext: NSManagedObjectContext) {}
 }

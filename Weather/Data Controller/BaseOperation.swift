@@ -14,8 +14,8 @@
 
 import Foundation
 
-class BaseOperation : NSOperation {
-    var myError: ErrorType?
+class BaseOperation : Operation {
+    var myError: ErrorProtocol?
 
     enum State: String {
         case Ready, Executing, Finished
@@ -27,30 +27,30 @@ class BaseOperation : NSOperation {
     
     var state = State.Ready {
         willSet {
-            willChangeValueForKey(newValue.keyPath)
-            willChangeValueForKey(state.keyPath)
+            willChangeValue(forKey: newValue.keyPath)
+            willChangeValue(forKey: state.keyPath)
         }
         didSet {
-            didChangeValueForKey(oldValue.keyPath)
-            didChangeValueForKey(state.keyPath)
+            didChangeValue(forKey: oldValue.keyPath)
+            didChangeValue(forKey: state.keyPath)
         }
     }
 
-    override var asynchronous: Bool {
+    override var isAsynchronous: Bool {
         get {
             return true
         }
     }
     
-    override var ready: Bool {
-        return super.ready && state == .Ready
+    override var isReady: Bool {
+        return super.isReady && state == .Ready
     }
     
-    override var executing: Bool {
+    override var isExecuting: Bool {
         return state == .Executing
     }
     
-    override var finished: Bool {
+    override var isFinished: Bool {
         return state == .Finished
     }
     

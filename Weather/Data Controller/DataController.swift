@@ -19,9 +19,9 @@ class DataController {
     let networkController = NetworkController()
     let persistenceController = PersistenceController()
     
-    let operationQueue = NSOperationQueue()
+    let operationQueue = OperationQueue()
     
-    func initCoreDataStack(completion: () -> ()) {
+    func initCoreDataStack(_ completion: () -> ()) {
         persistenceController.initCoreDataStack() {
             completion()
         }
