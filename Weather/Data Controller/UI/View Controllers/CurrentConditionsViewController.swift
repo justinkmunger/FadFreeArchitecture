@@ -270,10 +270,7 @@ extension CurrentConditionsViewController {
             return UITableViewCell()
         }
         
-        guard let stationResult = fetchedResultController.object(at: indexPath) as? StationResult else {
-            print("did not return station result object")
-            return UITableViewCell()
-        }
+        let stationResult = fetchedResultController.object(at: indexPath)
 
         cell.configureCell(stationResult)
         
@@ -307,11 +304,7 @@ extension CurrentConditionsViewController: NSFetchedResultsControllerDelegate {
                 return
             }
 
-            guard let stationResult = fetchedResultController.object(at: indexPath) as? StationResult else {
-                print("did not return station result object")
-                return
-            }
-            
+            let stationResult = fetchedResultController.object(at: indexPath)            
             cell.configureCell(stationResult)
         case .move:
             tableView.deleteRows(at: [indexPath!], with: .automatic)
