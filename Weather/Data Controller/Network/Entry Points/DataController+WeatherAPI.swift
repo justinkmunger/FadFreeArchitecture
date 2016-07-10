@@ -20,6 +20,9 @@ extension DataController {
         let nearbyStationNetworkOperation = networkController.getNearbyStationNetworkOperation("41.980953", longitude: "-87.659572")
         nearbyStationNetworkOperation.queuePriority = .normal
         
+        let nearbyStationPersistenceOperation = NearbyStationPersistenceOperation(parentContext: persistenceController.managedObjectContext)
+        nearbyStationPersistenceOperation.addDependency(nearbyStationNetworkOperation)
+
         nearbyStationNetworkOperation.completionBlock = { [weak nearbyStationNetworkOperation] in
             guard let strongOperation = nearbyStationNetworkOperation else {
                 return
@@ -31,10 +34,13 @@ extension DataController {
                 }
             }
         }
-
-        let nearbyStationPersistenceOperation = NearbyStationPersistenceOperation(parentContext: persistenceController.managedObjectContext)
+        
         nearbyStationPersistenceOperation.completionBlock = { [weak nearbyStationPersistenceOperation] in
             guard let strongOperation = nearbyStationPersistenceOperation else {
+                return
+            }
+            
+            if strongOperation.responseJSON == nil {
                 return
             }
             
@@ -48,8 +54,6 @@ extension DataController {
                 }
             }
         }
-        
-        nearbyStationPersistenceOperation.addDependency(nearbyStationNetworkOperation)
         
         operationQueue.addOperations([nearbyStationNetworkOperation, nearbyStationPersistenceOperation], waitUntilFinished: false)
     }
