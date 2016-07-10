@@ -26,4 +26,8 @@ class DataController {
             completion()
         }
     }
+    
+    func save() {
+        persistenceController.save()
+    }
 }
