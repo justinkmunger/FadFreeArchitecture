@@ -24,11 +24,16 @@ protocol JSONResponseProvider {
 }
 
 class NetworkOperation: BaseOperation, JSONResponseProvider {
+    let networkErrorDomainString = "WeatherNetworkErrorDomain"
+    let networkErrorObjectUserInfoKey = "WeatherNetworkErrorObjectUserInfoKey"
+    
     let task: URLSessionTask
     
-    var myData = NSMutableData()
+    var myData = Data()
     
     var responseJSON: AnyObject?
+    
+    var statusCode: Int?
     
     init(task: URLSessionTask) {
         self.task = task
@@ -46,10 +51,8 @@ class NetworkOperation: BaseOperation, JSONResponseProvider {
         
         state = .Executing
     }
-        
-    func processData() {}
     
-    func didReceiveResponse(_ response: URLResponse, completionHandler: (URLSession.ResponseDisposition) -> Void) {
+    func didReceiveResponse(response: URLResponse, completionHandler: (URLSession.ResponseDisposition) -> Void) {
         if isCancelled {
             state = .Finished
             task.cancel()
@@ -60,15 +63,12 @@ class NetworkOperation: BaseOperation, JSONResponseProvider {
             fatalError("Unexpected response")
         }
         
-        if httpResponse.statusCode != 200 {
-            completionHandler(.cancel)
-            return
-        }
+        self.statusCode = httpResponse.statusCode
         
         completionHandler(.allow)
     }
     
-    func didReceiveData(_ data: Data) {
+    func didReceiveData(data: Data) {
         if isCancelled {
             state = .Finished
             task.cancel()
@@ -78,7 +78,7 @@ class NetworkOperation: BaseOperation, JSONResponseProvider {
         myData.append(data)
     }
     
-    func didCompleteWithError(_ error: NSError?) {
+    func didCompleteWithError(error: NSError?) {
         if isCancelled {
             state = .Finished
             task.cancel()
@@ -91,13 +91,26 @@ class NetworkOperation: BaseOperation, JSONResponseProvider {
             return
         }
         
-        do {
-            self.responseJSON = try JSONSerialization.jsonObject(with: myData as Data, options: .allowFragments)
-        } catch let error as NSError {
-            myError = error
+        if self.statusCode >= 200 && self.statusCode < 300 {
+            do {
+                responseJSON = try JSONSerialization.jsonObject(with: myData, options: .allowFragments)
+                state = .Finished                
+            } catch {
+                myError = error
+                state = .Finished
+            }
+        } else {
+            var errorResponseDictionary: [String: AnyObject] = [:]
+            
+            do {
+                errorResponseDictionary = try JSONSerialization.jsonObject(with: myData, options: .allowFragments) as! [String : AnyObject]
+            } catch {
+                myError = error
+                state = .Finished
+                return
+            }
+            myError = NSError(domain: self.networkErrorDomainString, code: self.statusCode ?? -1, userInfo: [networkErrorObjectUserInfoKey: errorResponseDictionary])
             state = .Finished
         }
-        
-        state = .Finished
     }
 }

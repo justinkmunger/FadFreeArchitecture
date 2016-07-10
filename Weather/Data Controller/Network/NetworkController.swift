@@ -81,7 +81,7 @@ extension NetworkController: URLSessionDataDelegate {
             if operation.isCancelled {
                 taskToOperationMap[dataTask] = nil
             } else {
-                operation.didReceiveResponse(response, completionHandler: completionHandler)
+                operation.didReceiveResponse(response: response, completionHandler: completionHandler)
             }
         }
     }
@@ -91,7 +91,7 @@ extension NetworkController: URLSessionDataDelegate {
             if operation.isCancelled {
                 taskToOperationMap[dataTask] = nil
             } else {
-                operation.didReceiveData(data)
+                operation.didReceiveData(data: data)
             }
 
         }
@@ -99,7 +99,7 @@ extension NetworkController: URLSessionDataDelegate {
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: NSError?) {
         if let operation = taskToOperationMap[task] {
-            operation.didCompleteWithError(error)
+            operation.didCompleteWithError(error: error)
             taskToOperationMap[task] = nil
         }
     }
