@@ -22,7 +22,7 @@ class PersistenceController {
     private let writerContext: NSManagedObjectContext
     
     init() {
-        guard let modelURL = Bundle.main().urlForResource("Weather", withExtension: "momd") else {
+        guard let modelURL = Bundle.main.urlForResource("Weather", withExtension: "momd") else {
             fatalError("Unable to find model file")
         }
         
@@ -41,7 +41,7 @@ class PersistenceController {
     
     func initCoreDataStack(_ completion: () -> ()) {
         DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes.qosBackground).async {
-            let fileManager = FileManager.default()
+            let fileManager = FileManager.default
             let docURL = fileManager.urlsForDirectory(.documentDirectory, inDomains: .userDomainMask).last
             
             guard let storeURL = try! docURL?.appendingPathComponent("data.sqlite") else {
@@ -63,7 +63,7 @@ class PersistenceController {
     }
     
     func save() {
-        if !Thread.isMainThread() {
+        if !Thread.isMainThread {
             DispatchQueue.main.sync {
                 self.save()
             }
