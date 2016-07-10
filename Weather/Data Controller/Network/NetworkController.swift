@@ -21,7 +21,7 @@ class NetworkController: NSObject {
     private var taskToOperationMap: [URLSessionTask: NetworkOperation]
 
     lazy var apiKey: String = {
-        guard let apiKeyPath = Bundle.main().pathForResource("APIKey", ofType: "plist") else {
+        guard let apiKeyPath = Bundle.main.pathForResource("APIKey", ofType: "plist") else {
             fatalError("Couldn't find APIKey.plist")
         }
 
@@ -47,7 +47,7 @@ class NetworkController: NSObject {
 
         super.init()
         
-        let configuration = URLSessionConfiguration.default()
+        let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 30.0
         
         session = Foundation.URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
