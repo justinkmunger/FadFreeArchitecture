@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		26BDAC471CFA4D95009391EC /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC301CFA4D95009391EC /* BaseOperation.swift */; };
 		26BDAC481CFA4D95009391EC /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC311CFA4D95009391EC /* DataController.swift */; };
-		26BDAC491CFA4D95009391EC /* DataController+WeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC341CFA4D95009391EC /* DataController+WeatherAPI.swift */; };
+		26BDAC491CFA4D95009391EC /* DataController+Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC341CFA4D95009391EC /* DataController+Network.swift */; };
 		26BDAC4A1CFA4D95009391EC /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC351CFA4D95009391EC /* NetworkController.swift */; };
 		26BDAC4C1CFA4D95009391EC /* NetworkOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC381CFA4D95009391EC /* NetworkOperation.swift */; };
 		26BDAC4D1CFA4D95009391EC /* Weather.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC3B1CFA4D95009391EC /* Weather.xcdatamodeld */; };
 		26BDAC4E1CFA4D95009391EC /* StationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC3F1CFA4D95009391EC /* StationResult.swift */; };
 		26BDAC4F1CFA4D95009391EC /* StationResult+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC411CFA4D95009391EC /* StationResult+CoreDataProperties.swift */; };
-		26BDAC501CFA4D95009391EC /* DataController+CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC431CFA4D95009391EC /* DataController+CoreData.swift */; };
+		26BDAC501CFA4D95009391EC /* DataController+Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC431CFA4D95009391EC /* DataController+Persistence.swift */; };
 		26BDAC511CFA4D95009391EC /* NearbyStationPersistenceOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC451CFA4D95009391EC /* NearbyStationPersistenceOperation.swift */; };
 		26BDAC521CFA4D95009391EC /* PersistenceOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26BDAC461CFA4D95009391EC /* PersistenceOperation.swift */; };
 		26BDAC581CFA4DA0009391EC /* APIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26BDAC541CFA4DA0009391EC /* APIKey.plist */; };
@@ -31,13 +31,13 @@
 /* Begin PBXFileReference section */
 		26BDAC301CFA4D95009391EC /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
 		26BDAC311CFA4D95009391EC /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
-		26BDAC341CFA4D95009391EC /* DataController+WeatherAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataController+WeatherAPI.swift"; sourceTree = "<group>"; };
+		26BDAC341CFA4D95009391EC /* DataController+Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataController+Network.swift"; sourceTree = "<group>"; };
 		26BDAC351CFA4D95009391EC /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		26BDAC381CFA4D95009391EC /* NetworkOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkOperation.swift; sourceTree = "<group>"; };
 		26BDAC3C1CFA4D95009391EC /* Weather.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Weather.xcdatamodel; sourceTree = "<group>"; };
 		26BDAC3F1CFA4D95009391EC /* StationResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationResult.swift; sourceTree = "<group>"; };
 		26BDAC411CFA4D95009391EC /* StationResult+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StationResult+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		26BDAC431CFA4D95009391EC /* DataController+CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataController+CoreData.swift"; sourceTree = "<group>"; };
+		26BDAC431CFA4D95009391EC /* DataController+Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataController+Persistence.swift"; sourceTree = "<group>"; };
 		26BDAC451CFA4D95009391EC /* NearbyStationPersistenceOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyStationPersistenceOperation.swift; sourceTree = "<group>"; };
 		26BDAC461CFA4D95009391EC /* PersistenceOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceOperation.swift; sourceTree = "<group>"; };
 		26BDAC541CFA4DA0009391EC /* APIKey.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKey.plist; sourceTree = "<group>"; };
@@ -87,7 +87,7 @@
 		26BDAC331CFA4D95009391EC /* Entry Points */ = {
 			isa = PBXGroup;
 			children = (
-				26BDAC341CFA4D95009391EC /* DataController+WeatherAPI.swift */,
+				26BDAC341CFA4D95009391EC /* DataController+Network.swift */,
 			);
 			path = "Entry Points";
 			sourceTree = "<group>";
@@ -148,7 +148,7 @@
 		26BDAC421CFA4D95009391EC /* Entry Points */ = {
 			isa = PBXGroup;
 			children = (
-				26BDAC431CFA4D95009391EC /* DataController+CoreData.swift */,
+				26BDAC431CFA4D95009391EC /* DataController+Persistence.swift */,
 			);
 			path = "Entry Points";
 			sourceTree = "<group>";
@@ -313,9 +313,9 @@
 				26BDAC681CFA4DAD009391EC /* CurrentConditionsViewController.swift in Sources */,
 				26BDAC4A1CFA4D95009391EC /* NetworkController.swift in Sources */,
 				26BDAC471CFA4D95009391EC /* BaseOperation.swift in Sources */,
-				26BDAC501CFA4D95009391EC /* DataController+CoreData.swift in Sources */,
+				26BDAC501CFA4D95009391EC /* DataController+Persistence.swift in Sources */,
 				26BDAC691CFA4DAD009391EC /* StationCell.swift in Sources */,
-				26BDAC491CFA4D95009391EC /* DataController+WeatherAPI.swift in Sources */,
+				26BDAC491CFA4D95009391EC /* DataController+Network.swift in Sources */,
 				26BDAC4D1CFA4D95009391EC /* Weather.xcdatamodeld in Sources */,
 				26BDAC4F1CFA4D95009391EC /* StationResult+CoreDataProperties.swift in Sources */,
 				26BDAC521CFA4D95009391EC /* PersistenceOperation.swift in Sources */,
