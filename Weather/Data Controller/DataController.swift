@@ -15,6 +15,11 @@
 import CoreData
 import Foundation
 
+enum DataControllerResult<T> {
+    case success(T)
+    case error(NSError)
+}
+
 class DataController {
     let networkController = NetworkController()
     let persistenceController = PersistenceController()

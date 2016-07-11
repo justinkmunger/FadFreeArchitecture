@@ -14,11 +14,6 @@
 
 import Foundation
 
-enum NetworkResult<T> {
-    case success(T)
-    case error(NSError)
-}
-
 protocol JSONResponseProvider {
     var responseJSON: AnyObject? { get }
 }

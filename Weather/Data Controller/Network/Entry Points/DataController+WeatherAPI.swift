@@ -16,7 +16,7 @@ import CoreData
 import Foundation
 
 extension DataController {
-    func getStations(_ completion: ((NetworkResult<AnyObject?>)->())?) {
+    func getStations(_ completion: ((DataControllerResult<AnyObject?>)->())?) {
         let nearbyStationNetworkOperation = networkController.getNearbyStationNetworkOperation("41.980953", longitude: "-87.659572")
         nearbyStationNetworkOperation.queuePriority = .normal
         
