@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
         guard let navController = window!.rootViewController,
-            mainViewController = navController.childViewControllers.first as? CurrentConditionsViewController else {
+            let mainViewController = navController.childViewControllers.first as? CurrentConditionsViewController else {
             fatalError("ViewController not found")
         }
         

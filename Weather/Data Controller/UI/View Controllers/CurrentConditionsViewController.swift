@@ -242,7 +242,7 @@ extension CurrentConditionsViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let fetchedResultController = self.stationResultsFetchedResultsController, sections = fetchedResultController.sections else {
+        guard let fetchedResultController = self.stationResultsFetchedResultsController, let sections = fetchedResultController.sections else {
             return nil
         }
         
@@ -252,7 +252,7 @@ extension CurrentConditionsViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         guard let fetchedResultController = self.stationResultsFetchedResultsController,
-            sections = fetchedResultController.sections else {
+            let sections = fetchedResultController.sections else {
                 return 0
         }
         

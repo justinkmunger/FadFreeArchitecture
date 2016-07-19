@@ -27,7 +27,7 @@ extension DataController {
                 return
             }
             
-            if let completion = completion, error = strongOperation.myError as? NSError {
+            if let completion = completion, let error = strongOperation.myError as? NSError {
                 OperationQueue.main.addOperation {
                     completion(.error(error))
                 }

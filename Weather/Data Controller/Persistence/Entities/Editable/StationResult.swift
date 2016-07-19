@@ -25,7 +25,7 @@ class StationResult: NSManagedObject {
         
         jsonDistance = jsonDistance * 0.62137
         
-        guard let station = stationJSON["station"] as? [String: AnyObject], id = station["id"] as? Int else {
+        guard let station = stationJSON["station"] as? [String: AnyObject], let id = station["id"] as? Int else {
             print("No station found")
             return
         }
@@ -35,7 +35,7 @@ class StationResult: NSManagedObject {
         var jsonTemperature: Double?
         var jsonDate: Double?
         
-        if let last = stationJSON["last"] as? [String: AnyObject], main = last["main"] as? [String: AnyObject] {
+        if let last = stationJSON["last"] as? [String: AnyObject], let main = last["main"] as? [String: AnyObject] {
             jsonTemperature = main["temp"] as? Double
             
             if jsonTemperature != nil {
@@ -57,7 +57,7 @@ class StationResult: NSManagedObject {
     }
     
     class func getStationID(_ stationJSON: [String: AnyObject]) -> Int? {
-        guard let station = stationJSON["station"] as? [String: AnyObject], id = station["id"] as? Int else {
+        guard let station = stationJSON["station"] as? [String: AnyObject], let id = station["id"] as? Int else {
             return nil
         }
         
