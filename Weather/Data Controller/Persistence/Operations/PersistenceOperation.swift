@@ -23,7 +23,7 @@ enum PersistenceResult {
 class PersistenceOperation: BaseOperation {
     let parentContext: NSManagedObjectContext
     
-    var responseJSON: AnyObject?
+    var responseJSON: Any?
     
     init(parentContext: NSManagedObjectContext) {
         self.parentContext = parentContext

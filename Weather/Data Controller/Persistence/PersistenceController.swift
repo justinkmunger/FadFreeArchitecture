@@ -22,7 +22,7 @@ class PersistenceController {
     private let writerContext: NSManagedObjectContext
     
     init() {
-        guard let modelURL = Bundle.main.urlForResource("Weather", withExtension: "momd") else {
+        guard let modelURL = Bundle.main.url(forResource: "Weather", withExtension: "momd") else {
             fatalError("Unable to find model file")
         }
         
@@ -39,12 +39,12 @@ class PersistenceController {
         managedObjectContext.parent = writerContext
     }
     
-    func initCoreDataStack(_ completion: () -> ()) {
-        DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes.qosBackground).async {
+    func initCoreDataStack(_ completion: @escaping () -> ()) {
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
             let fileManager = FileManager.default
-            let docURL = fileManager.urlsForDirectory(.documentDirectory, inDomains: .userDomainMask).last
+            let docURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).last
             
-            guard let storeURL = try! docURL?.appendingPathComponent("data.sqlite") else {
+            guard let storeURL = docURL?.appendingPathComponent("data.sqlite") else {
                 fatalError("Unable to resolve persistent store URL")
             }
             

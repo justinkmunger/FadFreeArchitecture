@@ -163,7 +163,7 @@ class CurrentConditionsViewController: UITableViewController {
         let dateSortDirectionString = dateSortDescriptorAscending ? "Descending" : "Ascending"
         let dateAction = UIAlertAction(title: "Date \(dateSortDirectionString)", style: .default) { action in
             
-            var dateSortDescriptor: SortDescriptor
+            var dateSortDescriptor: NSSortDescriptor
             
             if self.dateSortDescriptorAscending {
                 dateSortDescriptor = self.dataController.dateSortDescriptorDescending
@@ -184,7 +184,7 @@ class CurrentConditionsViewController: UITableViewController {
         let nameSortDirectionString = nameSortDescriptorAscending ? "Descending" : "Ascending"
         let nameAction = UIAlertAction(title: "Name \(nameSortDirectionString)", style: .default) { action in
             
-            var nameSortDescriptor: SortDescriptor
+            var nameSortDescriptor: NSSortDescriptor
             
             if self.nameSortDescriptorAscending {
                 nameSortDescriptor = self.dataController.nameSortDescriptorDescending
@@ -205,7 +205,7 @@ class CurrentConditionsViewController: UITableViewController {
         
         let distanceSortDirectionString = distanceSortDescriptorAscending ? "Descending" : "Ascending"
         let distanceAction = UIAlertAction(title: "Distance \(distanceSortDirectionString)", style: .default) { action in
-            var distanceSortDescriptor: SortDescriptor
+            var distanceSortDescriptor: NSSortDescriptor
             
             if self.distanceSortDescriptorAscending {
                 distanceSortDescriptor = self.dataController.distanceSortDescriptorDescending
@@ -282,8 +282,8 @@ extension CurrentConditionsViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: AnyObject, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .insert:
             tableView.insertRows(at: [newIndexPath!], with: .automatic)
@@ -294,17 +294,17 @@ extension CurrentConditionsViewController: NSFetchedResultsControllerDelegate {
                 print("indexPath not valid")
                 return
             }
-            
+
             guard let cell = tableView.cellForRow(at: indexPath) as? StationCell else {
                 return
             }
-            
+
             guard let fetchedResultController = self.stationResultsFetchedResultsController else {
                 print("fetchedResultController not set")
                 return
             }
 
-            let stationResult = fetchedResultController.object(at: indexPath)            
+            let stationResult = fetchedResultController.object(at: indexPath)
             cell.configureCell(stationResult)
         case .move:
             tableView.deleteRows(at: [indexPath!], with: .automatic)

@@ -30,7 +30,7 @@ class NearbyStationPersistenceOperation: PersistenceOperation {
                     
                     let fetchRequest = NSFetchRequest<StationResult>(entityName: "StationResult")
                     
-                    let idPredicate = Predicate(format: "stationID = %d", stationID)
+                    let idPredicate = NSPredicate(format: "stationID = %d", stationID)
                     fetchRequest.predicate = idPredicate
                     
                     do {

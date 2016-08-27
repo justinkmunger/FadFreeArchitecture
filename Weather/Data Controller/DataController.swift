@@ -26,7 +26,7 @@ class DataController {
     
     let operationQueue = OperationQueue()
     
-    func initCoreDataStack(_ completion: () -> ()) {
+    func initCoreDataStack(_ completion: @escaping () -> ()) {
         persistenceController.initCoreDataStack() {
             completion()
         }

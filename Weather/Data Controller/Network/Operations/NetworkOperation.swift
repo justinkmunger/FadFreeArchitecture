@@ -15,7 +15,7 @@
 import Foundation
 
 protocol JSONResponseProvider {
-    var responseJSON: AnyObject? { get }
+    var responseJSON: Any? { get }
 }
 
 class NetworkOperation: BaseOperation, JSONResponseProvider {
@@ -26,7 +26,7 @@ class NetworkOperation: BaseOperation, JSONResponseProvider {
     
     var myData = Data()
     
-    var responseJSON: AnyObject?
+    var responseJSON: Any?
     
     var statusCode: Int?
     
@@ -73,7 +73,7 @@ class NetworkOperation: BaseOperation, JSONResponseProvider {
         myData.append(data)
     }
     
-    func didCompleteWithError(error: NSError?) {
+    func didCompleteWithError(error: Error?) {
         if isCancelled {
             state = .Finished
             task.cancel()
@@ -86,7 +86,7 @@ class NetworkOperation: BaseOperation, JSONResponseProvider {
             return
         }
         
-        if self.statusCode >= 200 && self.statusCode < 300 {
+        if let statusCode = self.statusCode, (statusCode >= 200 && statusCode < 300) {
             do {
                 responseJSON = try JSONSerialization.jsonObject(with: myData, options: .allowFragments)
                 state = .Finished                

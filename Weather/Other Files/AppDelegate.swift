@@ -22,16 +22,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var dataController: DataController?
 
     var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         guard let navController = window!.rootViewController,
             let mainViewController = navController.childViewControllers.first as? CurrentConditionsViewController else {
             fatalError("ViewController not found")
         }
-        
+
         self.dataController = DataController()
-        
+
         mainViewController.dataController = dataController
         
         return true

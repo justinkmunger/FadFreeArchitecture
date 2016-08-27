@@ -15,7 +15,7 @@
 import Foundation
 
 class BaseOperation : Operation {
-    var myError: ErrorProtocol?
+    var myError: Error?
 
     enum State: String {
         case Ready, Executing, Finished

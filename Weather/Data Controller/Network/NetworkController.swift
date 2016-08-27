@@ -18,10 +18,10 @@ class NetworkController: NSObject {
     let rootURL: URL
     var session: Foundation.URLSession!
     
-    private var taskToOperationMap: [URLSessionTask: NetworkOperation]
+    fileprivate var taskToOperationMap: [URLSessionTask: NetworkOperation]
 
     lazy var apiKey: String = {
-        guard let apiKeyPath = Bundle.main.pathForResource("APIKey", ofType: "plist") else {
+        guard let apiKeyPath = Bundle.main.path(forResource: "APIKey", ofType: "plist") else {
             fatalError("Couldn't find APIKey.plist")
         }
 
@@ -76,7 +76,7 @@ class NetworkController: NSObject {
 }
 
 extension NetworkController: URLSessionDataDelegate {
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: (URLSession.ResponseDisposition) -> Void) {
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
         if let operation = taskToOperationMap[dataTask] {
             if operation.isCancelled {
                 taskToOperationMap[dataTask] = nil
@@ -97,7 +97,7 @@ extension NetworkController: URLSessionDataDelegate {
         }
     }
     
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: NSError?) {
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         if let operation = taskToOperationMap[task] {
             operation.didCompleteWithError(error: error)
             taskToOperationMap[task] = nil

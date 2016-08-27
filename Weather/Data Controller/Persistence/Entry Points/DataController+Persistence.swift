@@ -19,7 +19,7 @@ extension DataController {
     func stationResultsFetchResultsController() -> NSFetchedResultsController<StationResult> {
         let request = NSFetchRequest<StationResult>(entityName: "StationResult")
         
-        let stationNamePredicate = Predicate(format: "name.length > 0")
+        let stationNamePredicate = NSPredicate(format: "name.length > 0")
         request.predicate = stationNamePredicate
         
         request.sortDescriptors = [distanceSortDescriptorAscending]
@@ -29,48 +29,48 @@ extension DataController {
         return frc
     }
     
-    var dateSortDescriptorAscending: SortDescriptor {
-        return SortDescriptor(key: "date", ascending: true)
+    var dateSortDescriptorAscending: NSSortDescriptor {
+        return NSSortDescriptor(key: "date", ascending: true)
     }
 
-    var dateSortDescriptorDescending: SortDescriptor {
-        return SortDescriptor(key: "date", ascending: false)
+    var dateSortDescriptorDescending: NSSortDescriptor {
+        return NSSortDescriptor(key: "date", ascending: false)
     }
     
-    var distanceSortDescriptorAscending: SortDescriptor {
-        return SortDescriptor(key: "distance", ascending: true)
+    var distanceSortDescriptorAscending: NSSortDescriptor {
+        return NSSortDescriptor(key: "distance", ascending: true)
     }
 
-    var distanceSortDescriptorDescending: SortDescriptor {
-        return SortDescriptor(key: "distance", ascending: false)
+    var distanceSortDescriptorDescending: NSSortDescriptor {
+        return NSSortDescriptor(key: "distance", ascending: false)
     }
 
-    var nameSortDescriptorAscending: SortDescriptor {
-        return SortDescriptor(key: "name", ascending: true)
+    var nameSortDescriptorAscending: NSSortDescriptor {
+        return NSSortDescriptor(key: "name", ascending: true)
     }
 
-    var nameSortDescriptorDescending: SortDescriptor {
-        return SortDescriptor(key: "name", ascending: false)
+    var nameSortDescriptorDescending: NSSortDescriptor {
+        return NSSortDescriptor(key: "name", ascending: false)
     }
 
     
-    var allTimesPredicate: Predicate {
-        return Predicate(format: "name.length > 0")
+    var allTimesPredicate: NSPredicate {
+        return NSPredicate(format: "name.length > 0")
     }
     
-    var lastThirtyMinutesTimePredicate: Predicate {
-        return Predicate(format: "name.length > 0 AND date >= %@", Date().addingTimeInterval(-(60*30)))
+    var lastThirtyMinutesTimePredicate: NSPredicate {
+        return NSPredicate(format: "name.length > 0 AND date >= %@", Date().addingTimeInterval(-(60*30)) as CVarArg)
     }
     
-    var lastHourTimePredicate: Predicate {
-        return Predicate(format: "name.length > 0 AND date >= %@", Date().addingTimeInterval(-(60*60)))
+    var lastHourTimePredicate: NSPredicate {
+        return NSPredicate(format: "name.length > 0 AND date >= %@", Date().addingTimeInterval(-(60*60)) as CVarArg)
     }
     
-    var lastTwoHoursTimePredicate: Predicate {
-        return Predicate(format: "name.length > 0 AND date >= %@", Date().addingTimeInterval(-(60*120)))
+    var lastTwoHoursTimePredicate: NSPredicate {
+        return NSPredicate(format: "name.length > 0 AND date >= %@", Date().addingTimeInterval(-(60*120)) as CVarArg)
     }
 
-    var lastFourHoursTimePredicate: Predicate {
-        return Predicate(format: "name.length > 0 AND date >= %@", Date().addingTimeInterval(-(60*240)))
+    var lastFourHoursTimePredicate: NSPredicate {
+        return NSPredicate(format: "name.length > 0 AND date >= %@", Date().addingTimeInterval(-(60*240)) as CVarArg)
     }
 }
